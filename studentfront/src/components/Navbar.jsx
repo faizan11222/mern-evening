@@ -1,3 +1,4 @@
+import { Button } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -13,6 +14,7 @@ const Navbarr = () => {
           <Nav className="me-auto">
             <Nav.Link href="#home">Home</Nav.Link>
           </Nav>
+          <Button as={Link} to="/add">Add New Student</Button>
         </Navbar.Collapse>
       </Container>
     </Navbar>

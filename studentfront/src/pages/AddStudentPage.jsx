@@ -1,9 +1,12 @@
 import { useState } from "react";
-import { Button, Container, Form } from "react-bootstrap"
+import { Alert, Button, Container, Form } from "react-bootstrap"
 import { addStudent } from "../api/studentapi";
+import { useNavigate } from 'react-router-dom';
 
 const COURSES = ['MERN','React','Android','AI'];
 const AddStudentPage = () => {
+    const navigate = useNavigate();
+
     //hook that captures input fields data and hold them
     const [formData, setFormData] = useState({
         name:'',
@@ -30,18 +33,24 @@ const AddStudentPage = () => {
         //function for saving the student data into database
         const handleSubmit = async(e) => {
             //preventing button to refresh the page
-            e.perventDefault();
+            e.preventDefault();
             try{
             //finally saving the data into database
-            await addStudent({...formData})
+            const data = await addStudent({...formData})
+            setMessage({variant:'success',text:data.message})
+            //redirect to main page
+            setTimeout(() => navigate('/'),1500)
             }catch(err){
-                console.log(err);
+             setMessage({variant:'danger',text:'Could not add Student!'})
             }
         }
     return(
         <div>
     <Container>
         <h1>Add Student Form</h1>
+        { 
+            message && <Alert variant={message.variant}>{message.text}</Alert>
+        }
      <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3">
         <Form.Label>Name:</Form.Label>

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Navbarr from "./components/Navbar"
 import Homepage from "./pages/Homepage"
 import AddStudentPage from "./pages/AddStudentPage"
+import EditStudentPage from "./pages/EditStudentpage"
 
 function App() {
   
@@ -11,6 +12,7 @@ function App() {
     <Routes>
     <Route path="/" element={<Homepage />} />
     <Route path="/add" element={<AddStudentPage />} />
+    <Route path="/edit/:id" element={<EditStudentPage />} />
     </Routes>
     </BrowserRouter>
   )

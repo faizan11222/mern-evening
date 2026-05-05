@@ -1,13 +1,20 @@
 import { Badge, Button, Card, Container } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 
 const StudentCard = ({ student, onDelete }) => {
+const navigate = useNavigate();
 
     //function that ask us for the confirmation pop-up
     const handleDelete = () => {
       if(window.confirm(`Are you sure you want to delete ${student.name}`)){
         onDelete(student._id);
       }
+    }
+
+    //function that redirects me to edit component along with student id
+    const handleEdit = () => {
+      navigate(`/edit/${student._id}`)
     }
     return(
         <Container>
@@ -23,7 +30,7 @@ const StudentCard = ({ student, onDelete }) => {
       </Card.Body>
 
       <Card.Footer>
-        <Button variant="success">Edit</Button>{' '}
+        <Button variant="success" onClick={handleEdit}>Edit</Button>{' '}
         <Button variant="danger" onClick={handleDelete}>Delete</Button>
       </Card.Footer>
     </Card>

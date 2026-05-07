@@ -3,6 +3,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db')
 const studentRoutes = require('./routes/studentroutes');
+const authRoutes = require('./routes/authroutes');
 
 //configuring the env file so we can use it here
 dotenv.config();
@@ -20,6 +21,8 @@ app.use(cors());
 
 //setting the base url
 app.use('/api/student',studentRoutes);
+//setting base URL for login signup
+app.use('/api/auth',authRoutes)
 
 //fetching our PORT number from .env file
 const PORT = process.env.PORT;

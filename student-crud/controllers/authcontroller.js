@@ -18,7 +18,29 @@ const register = async (req,res) => {
         }
 
         //check if the email already exists or not into database
-    }catch(error){
+        const existingUser = await User.findOne({email})
+        if(existingUser){
+            return res.status(400).json({
+                success:false,
+                message:'Email already exists!'
+            })
+        }
+        //else register user into database
+        const user = await User.create({name,email,password})
+        //generating the token with registeration
+        const token = signToken(user._id);
 
+        res.status(201).json({
+            success:true,
+            message:'Account created successfully!',
+            token,
+            user:{id: user._id, name:user.name,email:user.email, role:user.role}
+        })
+    }catch(error){
+            res.status(500).json({
+            success:false,
+            message:'Something went wrong!',
+            })
     }
 }
+module.exports = {register};

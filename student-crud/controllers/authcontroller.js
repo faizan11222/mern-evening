@@ -43,4 +43,39 @@ const register = async (req,res) => {
             })
     }
 }
-module.exports = {register};
+
+const login = async(req,res) => {
+    try{
+         const {email,password} = req.body;
+
+         //validation
+        if(!email || !password){
+            return res.status(400).json({success:false, message:'please enter the required fields'})
+        }
+
+        //checking if the user is saved into database or not
+        const user = await User.findOne({email}).select('+password')
+
+        //if user not found or password do not match
+        if(!user || !(await user.matchPassword(password))){
+            return res.status(401).json({
+                success:false,
+                message:'Invalid credentials!'
+            })
+        }
+
+        const token = signToken(user._id);
+        res.status(201).json({
+            success:true,
+            message:'Login successfully!',
+            token,
+            user:{id: user._id, name:user.name,email:user.email, role:user.role}
+        })
+    }catch(error){
+        res.status(500).json({
+            success:false,
+            message:'Something went wrong!',
+            })
+    }
+}
+module.exports = {register, login};

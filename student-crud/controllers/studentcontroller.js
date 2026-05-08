@@ -21,7 +21,11 @@ const addStudent = async (req,res) => {
                 message:'Data has been saved successfully!'
             })
     }catch(error){
-
+        res.status(500).json({
+            success:false,
+            message:'Something went wrong!',
+            error: error.message
+        })
     }
 }
 
@@ -107,7 +111,11 @@ const updateStudent = async(req,res) => {
             message:'Student record updated successfully!'
         })
     }catch(error){
-
+        res.status(500).json({
+            success:false,
+            message:'Something went wrong!',
+            error: error.message
+        })
     }
 }
 
